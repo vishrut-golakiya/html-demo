@@ -5,6 +5,7 @@ phases:
     commands:
       - echo "Installing dependencies..."
       - sudo apt update -y
+      - sudo apt install apache2 -y
       - sudo apt install -y git unzip awscli
 
   pre_build:
