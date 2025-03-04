@@ -11,7 +11,7 @@ phases:
   pre_build:
     commands:
       - echo "Cloning latest code from GitHub..."
-      - rm -rf /var/www/html/html-demo
+      - rm -rf /var/www/html/*
       - git clone -b main https://github.com/vishrut-golakiya/html-demo.git /var/www/html/
       - sudo chown -R www-data:www-data /var/www/html/
       - sudo chmod -R 755 /var/www/html/
