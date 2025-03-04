@@ -1,0 +1,25 @@
+version: 0.2
+
+phases:
+  install:
+    commands:
+      - echo "Installing dependencies..."
+      - sudo apt update -y
+      - sudo apt install -y git unzip awscli
+
+  pre_build:
+    commands:
+      - echo "Cloning latest code from GitHub..."
+      - rm -rf /var/www/html/html-demo
+      - git clone -b main https://github.com/vishrut-golakiya/html-demo.git /var/www/html/
+      - sudo chown -R www-data:www-data /var/www/html/
+      - sudo chmod -R 755 /var/www/html/
+
+  build:
+    commands:
+      - echo "Restarting apche"
+      - sudo systemctl restart apache2  # Modify PHP version if needed
+
+  post_build:
+    commands:
+      - echo "Deployment Completed Successfully!"
