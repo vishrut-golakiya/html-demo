@@ -23,3 +23,8 @@ phases:
   post_build:
     commands:
       - echo "Deployment Completed Successfully!"
+  
+artifacts:
+  files:
+    - '**/*'
+  base-directory: /var/www/html
