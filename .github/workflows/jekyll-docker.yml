@@ -49,5 +49,5 @@ jobs:
             docker pull vishrut0/project:main
             docker stop project || true
             docker rm project || true
-            docker run -d --name project -p 80:80 vishrut0/project:latest
+            docker run -d --name project -p 80:80 vishrut0/project:main
           EOF
