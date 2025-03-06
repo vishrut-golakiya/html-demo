@@ -46,7 +46,7 @@ jobs:
           chmod 600 dockerhub.pem
           ssh -o StrictHostKeyChecking=no -i dockerhub.pem ubuntu@${EC2_PUBLIC_IP} << 'EOF'
             docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
-            docker pull vishrut0/project:latest
+            docker pull vishrut0/project:main
             docker stop project || true
             docker rm project || true
             docker run -d --name project -p 80:80 vishrut0/project:latest
