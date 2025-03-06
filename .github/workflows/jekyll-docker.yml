@@ -21,12 +21,12 @@ jobs:
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
-        uses: docker/metadata-action@98669ae865ea3cffbcbaa878cf57c20bbf1c6c38
+        uses: docker/metadata-action@v4
         with:
           images: vishrut0/project
       
       - name: Build and push Docker image
-        uses: docker/build-push-action@ad44023a93711e3deb337508980b4b5e9bcdc5dc
+        uses: docker/build-push-action@v5
         with:
           context: .
           push: true
@@ -34,6 +34,7 @@ jobs:
           labels: ${{ steps.meta.outputs.labels }}
 
   deploy:
+    needs: build
     runs-on: ubuntu-latest
     steps:
       - name: SSH and deploy
@@ -44,9 +45,9 @@ jobs:
           echo "${EC2_SSH_KEY}" > dockerhub.pem
           chmod 600 dockerhub.pem
           ssh -o StrictHostKeyChecking=no -i dockerhub.pem ubuntu@${EC2_PUBLIC_IP} << 'EOF'
+            docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} -p ${{ secrets.DOCKER_HUB_ACCESS_TOKEN }}
             docker pull vishrut0/project:latest
             docker stop project || true
             docker rm project || true
             docker run -d --name project -p 80:80 vishrut0/project:latest
           EOF
- 
